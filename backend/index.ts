@@ -1,10 +1,8 @@
-import express from 'express';
+import http from 'http';
+import { port } from './confg';
 
-const app = express();
-const port = 3000;
-app.get('/', (req, res) => {
-  res.send('The sedulous hyena ate the antelope!');
-});
+const app = http.createServer();
+
 app.listen(port, () => {
   return console.log(`server is listening on ${port}`);
 });
