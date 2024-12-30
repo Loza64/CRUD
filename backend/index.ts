@@ -1,8 +1,7 @@
-import http from 'http';
-import { port } from './confg';
+import { createServer } from 'http';
+import { port, runing } from './config';
+import app from './src/app';
 
-const app = http.createServer();
+const server = createServer(app);
 
-app.listen(port, () => {
-  return console.log(`server is listening on ${port}`);
-});
+server.listen(port, () => { runing(`on port: ${port}`) });
