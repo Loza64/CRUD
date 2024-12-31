@@ -5,7 +5,7 @@ const cloudinary = v2;
 
 cloudinary.config(cloudinaryConfig)
 
-export const upload = async (file: any) => {
+export const uploadImage = async (file: any) => {
     try {
         return await cloudinary.uploader.upload(file)
     } catch (error) {
