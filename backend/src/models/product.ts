@@ -5,7 +5,7 @@ type img = {
     url: string
 }
 
-interface Iproduct {
+export interface Iproduct {
     name: string
     company: string
     image: img
