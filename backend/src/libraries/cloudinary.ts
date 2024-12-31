@@ -6,17 +6,9 @@ const cloudinary = v2;
 cloudinary.config(cloudinaryConfig)
 
 export const uploadImage = async (file: any) => {
-    try {
-        return await cloudinary.uploader.upload(file)
-    } catch (error) {
-        return error
-    }
+    return await cloudinary.uploader.upload(file, { folder: 'crud' })
 }
 
 export const destroy = async (file: any) => {
-    try {
-        return await cloudinary.uploader.destroy(file)
-    } catch (error) {
-        return error
-    }
+    return await cloudinary.uploader.destroy(file)
 }
