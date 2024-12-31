@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { upload, uploadImage } from "../libraries/cloudinary";
+import { uploadImage } from "../libraries/cloudinary";
 import { saveProduct, updateById, deleteById, getProducts, product_update, product_body, product_image } from "../models/product";
 import { File } from 'multer'
 
@@ -70,7 +70,7 @@ export const updateImage = async (req: Request, res: Response, next: NextFunctio
         const { id } = req.params;
         const image = req.file;
         const data = await uploadImage(image)
-        const {pu} = data
+        const { pu } = data
     } catch (error) {
         next(error);
     }
