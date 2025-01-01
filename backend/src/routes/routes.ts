@@ -4,7 +4,7 @@ import { newProduct, updateProduct, deleteProduct, updateImage, getAll } from '.
 const router = Router()
 
 router.post('/new', newProduct)
-router.get('/all', getAll)
+router.get('/list', getAll)
 router.put('/update/:id', updateProduct)
 router.delete('/delete/:id', deleteProduct)
 router.put('/update/image/:id', updateImage)

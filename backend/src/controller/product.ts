@@ -3,7 +3,6 @@ import { uploadImage } from "../libraries/cloudinary";
 import { saveProduct, updateById, deleteById, getProducts, product_update, product_body, product_image } from "../models/product";
 import { File } from 'multer';
 import { remove } from 'fs-extra';
-import { body, validationResult } from 'express-validator';
 
 declare module 'express-serve-static-core' {
     interface Request {
