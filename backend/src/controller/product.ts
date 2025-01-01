@@ -27,7 +27,7 @@ export const newProduct = async (req: Request, res: Response, next: NextFunction
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
-        const data: product_update = req.body;
+        const data: product_body = req.body;
         const upload = await updateById(id, data);
         if (upload) {
             sendResponse(res, 200, "Producto actualizado");
@@ -35,6 +35,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
             sendResponse(res, 400, "Error al actualizar el producto");
         }
     } catch (error) {
+        console.error(error);
         next(error);
     }
 };
