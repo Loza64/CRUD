@@ -8,16 +8,16 @@ import router from "./routes/routes";
 
 const app = express();
 
-GetConnection();
- 
+GetConnection()
+
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(fileUpload({ useTempFiles: true, tempFileDir: '/upload' }));
+app.use(fileUpload({ useTempFiles: true, tempFileDir: './uploads' }));
 
 app.use("/api/rest/route/server/crud", router);
-app.get('/favicon.ico', (req: Request, res: Response) => { res.status(204).end() });  
 app.use(errorHandler);
+app.get('/favicon.ico', (req: Request, res: Response) => { res.status(204).end() });
 
 export default app;

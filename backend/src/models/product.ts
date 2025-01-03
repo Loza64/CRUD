@@ -1,12 +1,13 @@
 import { Schema, model } from "mongoose";
 
+interface Image {
+    public_id: string;
+    url: string;
+}
 interface Iproduct {
     name: string;
     company: string;
-    image: {
-        public_id: string;
-        url: string;
-    };
+    image?: Image;
     price: number;
     stock: number;
 }
@@ -14,13 +15,10 @@ interface Iproduct {
 const productSchema: Schema<Iproduct> = new Schema({
     name: { type: String, required: true, unique: true },
     company: { type: String, required: true, unique: true },
-    image: {
-        public_id: { type: String, default: "" },
-        url: { type: String, default: "" }
-    },
+    image: { type: Object, unique: true, default: null },
     price: { type: Number, required: true, min: 0, unique: true },
     stock: { type: Number, required: true, min: 0, unique: true }
-});
+}, { versionKey: false });
 
 const products = model<Iproduct>("Product", productSchema);
 
@@ -60,3 +58,11 @@ export const updateById = async (id: string, data: product_update) => {
         throw new Error(`Error al actualizar el producto: ${error.message}`);
     }
 };
+
+export const getById = async (id: string) => {
+    try {
+        return await products.findById(id)
+    } catch (error) {
+        throw new Error(`Error al obtener el producto: ${error.message}`);
+    }
+}

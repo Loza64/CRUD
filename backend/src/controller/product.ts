@@ -1,14 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { uploadImage } from "../libraries/cloudinary";
-import { saveProduct, updateById, deleteById, getProducts, product_update, product_body, product_image } from "../models/product";
-import { File } from 'multer';
+import { destroy, uploadImage } from "../libraries/cloudinary";
+import { saveProduct, updateById, deleteById, getProducts, product_body, getById } from "../models/product";
 import { remove } from 'fs-extra';
-
-declare module 'express-serve-static-core' {
-    interface Request {
-        file?: File;
-    }
-}
+import { UploadedFile } from "express-fileupload";
 
 const sendResponse = (res: Response, status: number, message: string, data?: any) => {
     return res.status(status).json({ status: status >= 200 && status < 300 ? "success" : "error", message, data });
@@ -31,12 +25,11 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
         const upload = await updateById(id, data);
         if (upload) {
             sendResponse(res, 200, "Producto actualizado");
-        }else{
+        } else {
             sendResponse(res, 400, "Error al actualizar el producto");
         }
     } catch (error) {
-        console.error(error);
-        next(error);
+        next(error);;
     }
 };
 
@@ -46,7 +39,7 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
         const removeResult = await deleteById(id);
         if (removeResult) {
             sendResponse(res, 200, "Producto eliminado");
-        }else{
+        } else {
             sendResponse(res, 400, "Error al eliminar el producto");
         }
     } catch (error) {
@@ -65,25 +58,28 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const updateImage = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
+    const { image } = req.files as unknown as { [fieldname: string]: UploadedFile };
+
     try {
-        const image = req.file;
-        const { public_id, url } = await uploadImage(image);
-        const data: product_image = { image: { public_id, url } };
-        const upload = await updateById(id, data);
+        const product = await getById(id);
+        if (!product) {
+            sendResponse(res, 404, "Producto no encontrado");
+            return
+        }
+
+        if (product.image) destroy(product.image.public_id);
+
+        const { public_id, url } = await uploadImage(image.tempFilePath);
+        const upload = await updateById(id, { image: { public_id, url } });
+
         if (upload) {
-            sendResponse(res, 200, "Imagen actualizada");
-        }else{
+            sendResponse(res, 200, "Imagen actualizada", upload);
+        } else {
             sendResponse(res, 400, "Error al actualizar la imagen");
         }
     } catch (error) {
         next(error);
     } finally {
-        if (req.file && req.file.path) {
-            try {
-                remove(req.file.path);
-            } catch (err) {
-                console.error("Error al eliminar el archivo temporal:", err);
-            }
-        }
+        if (image.tempFilePath) remove(image.tempFilePath);
     }
 };
