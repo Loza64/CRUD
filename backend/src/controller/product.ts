@@ -58,7 +58,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const updateImage = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const { image } = req.files as unknown as { [fieldname: string]: UploadedFile };
+    const photo = req.files?.image as UploadedFile
 
     try {
         const product = await getById(id);
@@ -69,7 +69,7 @@ export const updateImage = async (req: Request, res: Response, next: NextFunctio
 
         if (product.image) destroy(product.image.public_id);
 
-        const { public_id, url } = await uploadImage(image.tempFilePath);
+        const { public_id, url } = await uploadImage(photo.tempFilePath);
         const upload = await updateById(id, { image: { public_id, url } });
 
         if (upload) {
@@ -80,6 +80,6 @@ export const updateImage = async (req: Request, res: Response, next: NextFunctio
     } catch (error) {
         next(error);
     } finally {
-        if (image.tempFilePath) remove(image.tempFilePath);
+        if (photo.tempFilePath) remove(photo.tempFilePath);
     }
 };

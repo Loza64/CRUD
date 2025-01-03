@@ -1,5 +1,5 @@
 import { v2 } from 'cloudinary';
-import { cloudinaryConfig } from '../../config';
+import { cloudinaryConfig } from '../config';
 import { UploadedFile } from 'express-fileupload'; 
 
 const cloudinary = v2;

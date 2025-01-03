@@ -6,9 +6,10 @@
     "moduleResolution": "node",  
     "sourceMap": true,  
     "outDir": "dist",  
+    "rootDir": ".",
     "lib": ["es2015", "esnext"],
     "allowJs": true, 
     "typeRoots": ["./node_modules/@types", "./src/types"]  
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "index.ts"],
 }
