@@ -1,15 +1,17 @@
 {  
   "compilerOptions": {  
-    "module": "commonjs",  
+    "module": "CommonJS",  
     "esModuleInterop": true,  
-    "target": "es6",  
+    "allowSyntheticDefaultImports": true,  
+    "target": "esnext",  
     "moduleResolution": "node",  
     "sourceMap": true,  
     "outDir": "dist",  
-    "rootDir": ".",
-    "lib": ["es2015", "esnext"],
-    "allowJs": true, 
-    "typeRoots": ["./node_modules/@types", "./src/types"]  
-  },
-  "include": ["src/**/*.ts", "index.ts"],
+    "rootDir": "src",  
+    "lib": ["es2015", "esnext"],  
+    "allowJs": true,   
+    "typeRoots": ["./node_modules/@types", "./src/types"],  
+    "skipLibCheck": true  
+  },  
+  "include": ["src/**/*.ts"],  
 }
