@@ -61,9 +61,6 @@ export const updateImage = async (req: Request, res: Response, next: NextFunctio
     const photo = req.files?.image as UploadedFile
 
     try {
-
-        
-
         const product = await getById(id);
         if (!product) {
             sendResponse(res, 404, "Producto no encontrado");
