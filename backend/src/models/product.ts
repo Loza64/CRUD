@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, isValidObjectId, model } from "mongoose";
 
 interface Image {
     public_id: string;
@@ -44,6 +44,7 @@ export const getProducts = async () => {
 };
 
 export const deleteById = async (id: string) => {
+    if (!isValidObjectId(id)) return null;
     try {
         return await products.findByIdAndDelete(id);
     } catch (error) {
@@ -52,6 +53,7 @@ export const deleteById = async (id: string) => {
 };
 
 export const updateById = async (id: string, data: product_update) => {
+    if (!isValidObjectId(id)) return null;
     try {
         return await products.findByIdAndUpdate(id, data, { new: true });
     } catch (error) {
@@ -60,6 +62,7 @@ export const updateById = async (id: string, data: product_update) => {
 };
 
 export const getById = async (id: string) => {
+    if (!isValidObjectId(id)) return null;
     try {
         return await products.findById(id)
     } catch (error) {
