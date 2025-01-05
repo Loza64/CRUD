@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from "express";
-const { validationResult } = require("express-validator");
+import { validationResult } from "express-validator";
 import { error } from "../config";
 
 interface ValidationError {
@@ -13,19 +13,17 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
     const validator = validationResult(req);
 
     if (!validator.isEmpty()) {
-        const data: Record<string, string> = {};
-        const errors: ValidationError[] = validator.array();
 
-        errors.forEach(err => {
-            data[err.path] = err.msg
-            error(err.msg)
-        });
+        const errors = validator.array() as ValidationError[];
 
-        res.status(400).json({
-            status: "error",
-            message: "Errores de validación de entrada",
-            data
-        });
+        let data: Record<string, string> = errors.reduce((acc: Record<string, string>, error) => {
+            acc[error.path] = error.msg;
+            return acc;
+        }, {});
+
+        res.status(400).json({ status: "error", message: "Errores de validación de entrada", data });
+
+        error(data);
         return;
     }
 

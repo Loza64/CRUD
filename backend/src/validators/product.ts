@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+import { body } from "express-validator";
 
 export const validateProduct = [
     body("name").isString().isLength({ min: 3, max: 255 }).withMessage("Name must be a string with a minimum length of 3 and a maximum length of 255").
