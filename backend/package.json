@@ -1,19 +1,20 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "start": "tsc && node build/index.js",
-    "dev": "clear && cross-env DEBUG=Application:* ts-node-dev index.ts",
+    "dev": "clear && cross-env DEBUG=Application:* ts-node-dev src/index.ts",
     "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "test": "jest",
     "build": "tsc"
   },
   "keywords": [],
-  "author": "Tu Nombre <tuemail@example.com>",
+  "author": "Roberto Loza <robertoloxa88@gmail.com>",
   "license": "ISC",
   "description": "Backend de ejemplo con TypeScript, Express y Mongoose",
   "devDependencies": {
+    "@tensorflow/tfjs-node": "^4.22.0",
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
@@ -21,10 +22,12 @@
     "@types/node": "^22.10.4",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
+    "canvas": "^3.1.0",
     "cross-env": "^7.0.3",
     "debug": "^4.4.0",
     "eslint": "^9.17.0",
     "jest": "^29.7.0",
+    "nsfwjs": "^4.2.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2"
   },
